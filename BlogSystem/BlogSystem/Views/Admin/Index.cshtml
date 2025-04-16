@@ -1,0 +1,37 @@
+﻿@model List<BlogSystem.Models.Post>
+
+<h2>Tüm Blog Yazıları (Admin Panel)</h2>
+
+<a class="btn btn-outline-primary mb-4" href="/Categories/Index">Kategorileri Yönet</a>
+<a class="btn btn-outline-primary mb-3" href="/Users/Index">Kullanıcıları Yönet</a>
+<a class="btn btn-outline-danger mb-3" href="/Comments/Index">Yorumları Yönet</a>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Henüz yazı eklenmemiş.</div>
+}
+else
+{
+    @foreach (var post in Model)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">@post.Title</h4>
+
+                @if (!string.IsNullOrEmpty(post.ImagePath))
+                {
+                    <img src="@post.ImagePath" class="img-thumbnail mb-3" style="max-height: 200px;" />
+                }
+
+                <p class="card-text">
+                    <strong>Kategori:</strong> @post.Category?.Name <br />
+                    <strong>Yazar:</strong> @post.User?.Username <br />
+                    <strong>Tarih:</strong> @post.PublishedDate.ToShortDateString()
+                </p>
+
+                <a class="btn btn-outline-primary btn-sm" href="/Posts/Details/@post.Id">Detay</a>
+                <a class="btn btn-danger btn-sm" href="/Posts/Delete/@post.Id">Sil</a>
+            </div>
+        </div>
+    }
+}

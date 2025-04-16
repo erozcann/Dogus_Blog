@@ -1,0 +1,114 @@
+﻿@model BlogSystem.Models.Post
+
+@{
+    ViewData["Title"] = "Yeni Yazı Ekle";
+}
+
+<style>
+    .form-container {
+        max-width: 700px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    label {
+        font-weight: 500;
+    }
+
+    .form-control, .form-select {
+        border-radius: 10px;
+    }
+
+    .btn-primary {
+        border-radius: 20px;
+        padding: 8px 20px;
+    }
+
+    .btn-secondary {
+        border-radius: 20px;
+        padding: 8px 20px;
+        margin-left: 10px;
+    }
+
+    .tag-box {
+        background-color: #f4f4f4;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .form-check-label {
+        margin-right: 10px;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Yeni Blog Yazısı</h2>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">Görsel Yükle</label>
+            <input type="file" name="imageFile" class="form-control" />
+        </div>
+
+        <div class="mb-3 tag-box">
+            <label class="form-label">Etiketler</label>
+            <div>
+                @foreach (var tag in ViewBag.Tags as List<BlogSystem.Models.Tag>)
+                {
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="selectedTags" value="@tag.Id" id="tag_@tag.Id" />
+                        <label class="form-check-label" for="tag_@tag.Id">@tag.Name</label>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="mt-3">
+            <label for="newTag" class="form-label">Yeni Etiket Ekle</label>
+            <input type="text" name="newTag" class="form-control" placeholder="Örn: Yapay Zeka" />
+        </div>
+
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Başlık</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Content" class="form-label">İçerik</label>
+            <textarea asp-for="Content" class="form-control" rows="6"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CategoryId" class="form-label">Kategori</label>
+            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.Categories">
+                <option value="">Seçiniz</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <div class="mt-3">
+            <label for="newCategory" class="form-label">Yeni Kategori Ekle</label>
+            <input type="text" name="newCategory" class="form-control" placeholder="Örn: Bilim & Teknoloji" />
+        </div>
+
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+            <a class="btn btn-secondary" asp-action="Index">İptal</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

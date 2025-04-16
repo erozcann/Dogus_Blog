@@ -1,0 +1,147 @@
+﻿@model BlogSystem.Models.Post
+
+@{
+    ViewData["Title"] = "Yazı Detayı";
+}
+
+<style>
+    .details-container {
+        max-width: 850px;
+        margin: 50px auto;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        padding: 40px;
+    }
+
+    .details-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .details-meta {
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    .details-image {
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .details-category {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .details-content {
+        font-size: 1.1rem;
+        color: #333;
+        line-height: 1.7;
+        margin-bottom: 40px;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 6px 12px;
+        border-radius: 20px;
+    }
+
+    .comment-card {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .comment-author {
+        font-weight: 600;
+    }
+
+    .comment-date {
+        font-size: 0.85rem;
+        color: #888;
+    }
+
+    .comment-form textarea {
+        border-radius: 10px;
+    }
+
+    .btn-comment {
+        border-radius: 20px;
+        padding: 6px 16px;
+    }
+
+    .btn-back {
+        border-radius: 20px;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="details-container">
+    <div class="details-title">@Model.Title</div>
+    <div class="details-meta">Yazar: @Model.User?.Username | Tarih: @Model.PublishedDate.ToShortDateString()</div>
+
+    @if (!string.IsNullOrEmpty(Model.ImagePath))
+    {
+        <img src="@Model.ImagePath" class="img-fluid details-image" alt="Blog Görseli" />
+    }
+
+    <div class="details-category"><strong>Kategori:</strong> @Model.Category?.Name</div>
+
+    @if (Model.Tags != null && Model.Tags.Any())
+    {
+        <p>
+            <strong>Etiketler:</strong>
+            @foreach (var tag in Model.Tags)
+            {
+                <a href="/Posts/Tag/@tag.Id" class="badge bg-secondary me-1">@tag.Name</a>
+            }
+        </p>
+    }
+
+    <hr />
+    <div class="details-content">@Model.Content</div>
+    <hr class="my-4" />
+
+    <h4>Yorumlar</h4>
+
+    @if (Model.Comments != null && Model.Comments.Any())
+    {
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="comment-card">
+                <span class="comment-author">@comment.AuthorName:</span>
+                <p>@comment.Content</p>
+                <div class="comment-date">@comment.CreatedAt.ToShortDateString()</div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-muted">Henüz yorum yapılmamış.</p>
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form method="post" asp-controller="Comments" asp-action="Add" class="mt-3 comment-form">
+            <input type="hidden" name="postId" value="@Model.Id" />
+            <div class="mb-3">
+                <label for="content" class="form-label">Yorumunuzu yazın:</label>
+                <textarea name="content" class="form-control" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-comment">Yorum Gönder</button>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-info mt-3">Yorum yazmak için giriş yapmalısınız.</div>
+    }
+
+    <a class="btn btn-secondary btn-back" href="/Posts/Index">← Geri</a>
+</div>

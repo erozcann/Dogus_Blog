@@ -1,0 +1,38 @@
+﻿@model List<BlogSystem.Models.Comment>
+
+<h2>Yorum Yönetimi</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Henüz yorum yapılmamış.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Yazar</th>
+                <th>Yorum</th>
+                <th>Yazı Başlığı</th>
+                <th>Tarih</th>
+                <th style="width: 100px;">İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comment in Model)
+            {
+                <tr>
+                    <td>@comment.AuthorName</td>
+                    <td>@comment.Content</td>
+                    <td>@comment.Post?.Title</td>
+                    <td>@comment.CreatedAt.ToShortDateString()</td>
+                    <td>
+                        <form asp-action="Delete" method="post" asp-route-id="@comment.Id">
+                            <button class="btn btn-sm btn-danger">Sil</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

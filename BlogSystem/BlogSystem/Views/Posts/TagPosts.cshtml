@@ -1,0 +1,112 @@
+﻿@model List<BlogSystem.Models.Post>
+@{
+    ViewData["Title"] = "Etiketli Yazılar";
+    var tagName = ViewBag.TagName as string;
+}
+
+<style>
+    .tag-posts-container {
+        max-width: 1000px;
+        margin: 40px auto;
+    }
+
+    .tag-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+    .blog-card {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 30px;
+        transition: transform 0.25s ease;
+    }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .blog-img {
+        max-height: 250px;
+        object-fit: cover;
+        width: 100%;
+        border-bottom: 1px solid #eee;
+    }
+
+    .blog-body {
+        padding: 20px;
+    }
+
+    .blog-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .blog-meta {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 10px;
+    }
+
+    .blog-preview {
+        font-size: 1rem;
+        color: #444;
+        margin-bottom: 15px;
+    }
+
+    .btn-sm {
+        border-radius: 20px;
+        font-size: 0.85rem;
+        padding: 6px 14px;
+    }
+
+    .no-posts {
+        text-align: center;
+        font-size: 1.1rem;
+        color: #888;
+        margin-top: 40px;
+    }
+</style>
+
+<div class="tag-posts-container">
+    <div class="tag-title"># @tagName</div>
+
+    @if (!Model.Any())
+    {
+        <div class="no-posts">Bu etikete ait herhangi bir yazı bulunamadı.</div>
+    }
+    else
+    {
+        @foreach (var post in Model)
+        {
+            <div class="blog-card">
+                @if (!string.IsNullOrEmpty(post.ImagePath))
+                {
+                    <img src="@post.ImagePath" class="blog-img" alt="blog görseli" />
+                }
+
+                <div class="blog-body">
+                    <div class="blog-title">@post.Title</div>
+
+                    <div class="blog-meta">
+                        <strong>Kategori:</strong> @post.Category?.Name &nbsp;|&nbsp;
+                        <strong>Yazar:</strong> @post.User?.Username &nbsp;|&nbsp;
+                        <strong>Tarih:</strong> @post.PublishedDate.ToShortDateString()
+                    </div>
+
+                    <div class="blog-preview">
+                        @post.Content.Substring(0, Math.Min(120, post.Content.Length))...
+                    </div>
+
+                    <a class="btn btn-outline-primary btn-sm" href="/Posts/Details/@post.Id">Detay</a>
+                </div>
+            </div>
+        }
+    }
+</div>

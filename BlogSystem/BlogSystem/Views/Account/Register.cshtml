@@ -1,0 +1,101 @@
+﻿@{
+    Layout = null;
+}
+
+@model BlogSystem.Models.User
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Kayıt Ol - BlogSystem</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to top right, #6a11cb, #2575fc);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .register-box {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+            .register-box h2 {
+                font-weight: bold;
+                color: #4a00e0;
+                margin-bottom: 30px;
+            }
+
+            .register-box .form-control {
+                border-radius: 20px;
+            }
+
+            .register-box button {
+                border-radius: 20px;
+                background: #00c3ff;
+                border: none;
+                width: 100%;
+            }
+
+            .register-box a {
+                font-size: 0.9rem;
+                display: inline-block;
+                margin-top: 10px;
+            }
+
+            .register-box .icon-circle {
+                background: #fff;
+                border-radius: 50%;
+                width: 70px;
+                height: 70px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: -60px auto 20px auto;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+
+        .icon-circle img {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-box">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828506.png" alt="register" />
+        </div>
+
+        <h2>Hemen Kayıt Ol</h2>
+
+        <form asp-action="Register" method="post">
+            <div class="mb-3 text-start">
+                <label asp-for="Username" class="form-label"></label>
+                <input asp-for="Username" class="form-control" placeholder="Kullanıcı Adı" />
+            </div>
+            <div class="mb-3 text-start">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" placeholder="Email adresi" />
+            </div>
+            <div class="mb-3 text-start">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" type="password" placeholder="Şifre" />
+            </div>
+            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        </form>
+
+        <a href="/Account/Login">Zaten hesabın var mı? Giriş yap</a>
+    </div>
+</body>
+</html>

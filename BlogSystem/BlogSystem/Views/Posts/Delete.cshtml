@@ -1,0 +1,59 @@
+﻿@model BlogSystem.Models.Post
+
+@{
+    ViewData["Title"] = "Yazıyı Sil";
+}
+
+<style>
+    .delete-container {
+        max-width: 600px;
+        margin: 60px auto;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        padding: 40px;
+        text-align: center;
+    }
+
+        .delete-container h2 {
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #c82333;
+        }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+    }
+
+    .btn-danger {
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+
+    .btn-secondary {
+        border-radius: 20px;
+        padding: 10px 20px;
+        margin-left: 10px;
+    }
+</style>
+
+<div class="delete-container">
+    <h2>Yazıyı Sil</h2>
+
+    <div class="alert alert-danger">
+        <strong>@Model.Title</strong> başlıklı yazıyı silmek istediğinize emin misiniz?
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+        <a asp-action="Index" class="btn btn-secondary">Vazgeç</a>
+    </form>
+</div>

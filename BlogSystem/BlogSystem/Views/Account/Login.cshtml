@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Giriş Yap - BlogSystem</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to top right, #9f00ff, #5ce1e6);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+            .login-box h2 {
+                font-weight: bold;
+                color: #4a00e0;
+                margin-bottom: 30px;
+            }
+
+            .login-box .form-control {
+                border-radius: 20px;
+            }
+
+            .login-box button {
+                border-radius: 20px;
+                background: #00c3ff;
+                border: none;
+                width: 100%;
+            }
+
+            .login-box a {
+                font-size: 0.9rem;
+                display: inline-block;
+                margin-top: 10px;
+            }
+
+            .login-box .icon-circle {
+                background: #fff;
+                border-radius: 50%;
+                width: 70px;
+                height: 70px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: -60px auto 20px auto;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+
+        .icon-circle img {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="lock" />
+        </div>
+
+        <h2>Şimdi Giriş Yap</h2>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+
+        <form method="post">
+            <div class="mb-3 text-start">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" placeholder="Enter your email" required />
+            </div>
+            <div class="mb-3 text-start">
+                <label class="form-label">Şifre</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter your password" required />
+            </div>
+            
+            <button type="submit" class="btn btn-primary">GİRİŞ YAPMAK</button>
+        </form>
+
+        <a href="/Account/Register">Hesabınız yok mu?</a><br />
+        
+    </div>
+</body>
+</html>

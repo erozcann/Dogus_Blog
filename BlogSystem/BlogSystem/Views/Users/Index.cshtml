@@ -1,0 +1,31 @@
+﻿@model List<BlogSystem.Models.User>
+
+<h2>Kullanıcı Yönetimi</h2>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Adı</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th style="width: 180px;">İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>@(user.IsAdmin ? "Admin" : "Kullanıcı")</td>
+                <td>
+                    <form method="post" asp-action="ToggleAdmin" asp-route-id="@user.Id">
+                        <button type="submit" class="btn btn-sm @(user.IsAdmin ? "btn-warning" : "btn-success")">
+                            @(user.IsAdmin ? "Adminliği Al" : "Admin Yap")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
